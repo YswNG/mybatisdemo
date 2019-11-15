@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kkb.ysw.type3.mapper.UserMapper">
+    <select id="findUserById" parameterType="int" resultType="com.kkb.ysw.type3.pojo.User">
+        select * from k_user where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.kkb.ysw.type3.pojo.User" >
+    insert into k_user (username, age, address)
+    values (#{username,jdbcType=VARCHAR},#{age,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR})
+  </insert>
+</mapper>

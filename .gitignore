@@ -1,0 +1,6 @@
+/target/
+/src/test/
+/.idea/
+/log.log
+/mybatisdemo.iml
+

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kkb.ysw.type3.mapper.OrderMapper">
+    <!-- 使用resultMap 映射表字段与pojo不对应的情况-->
+    <resultMap id="orderExt" type="com.kkb.ysw.type3.vo.OrderExt">
+        <!--column是数据库字段 property 是 pojo字段 -->
+        <id column="id" property="id"></id>
+        <result column="user_id" property="userId"></result>
+        <result column="product_name" property="productName"></result>
+        <!--一对一 使用resultMap方式 查询 -->
+        <association property="user" javaType="com.kkb.ysw.type3.pojo.User">
+            <id column="id" property="id"></id>
+            <result column="username" property="username"></result>
+            <result column="age" property="age"></result>
+            <result column="address" property="address"></result>
+        </association>
+    </resultMap>
+    <resultMap id="oneToMore" type="com.kkb.ysw.type3.vo.UserExt">
+<!--        <result column="id" property="userId"></result>-->
+        <result column="username" property="username"></result>
+        <result column="age" property="age"></result>
+        <result column="address" property="address"></result>
+        <collection property="orderList" ofType="com.kkb.ysw.type3.pojo.Order">
+<!--            <result column="id" property="orderId" />-->
+            <result column="product_name" property="productName" />
+            <result column="user_id" property="userId" />
+        </collection>
+        </resultMap>
+    <select id="findOrderExtByOrderId" parameterType="int"
+            resultType="com.kkb.ysw.type3.vo.OrderExt2"><!-- 使用resultMap resultMap="orderExt"-->
+        SELECT
+            a.id,
+            a.product_name as productName,
+            b.username,
+            b.address
+        FROM k_order a
+        LEFT JOIN k_user b on a.user_id = b.id
+        where a.id = #{orderId};
+    </select>
+    <select id="findUserOrderByOneToMore" resultMap="oneToMore">
+        SELECT
+            a.id,
+            a.product_name,
+            a.user_id,
+            b.id,
+            b.age,b.username,b.address
+        FROM k_order a
+        LEFT JOIN k_user b on a.user_id = b.id
+    </select>
+</mapper>
