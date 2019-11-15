@@ -15,5 +15,5 @@ public interface OrderMapper {
 
     List<UserExt> findUserOrderByOneToMore();
 
-    void testGithub2();
+    void testGithub3();
 }
