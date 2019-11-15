@@ -14,4 +14,6 @@ public interface OrderMapper {
     OrderExt findOrderExtList();
 
     List<UserExt> findUserOrderByOneToMore();
+
+    void testGithub();
 }
